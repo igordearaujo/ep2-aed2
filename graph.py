@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import collections
+
 
 # Cenário 3
 
@@ -90,26 +92,16 @@ def main():
     grafo = build_graph(data)
     num_arestas = count_edges(grafo)
 
-    qtd_encontros = [0] * 86319
-    count_zero = 0
-    count_zero_cinco = 0
-    count_cinco_dez = 0
-    count_mais_dez = 0
-
+    qtd_encontros = []
 
     for item in range(len(grafo.graph)):
         grau_vertice = count_node_degree(grafo, item)
 
-        if grau_vertice == 0:
-            count_zero += 1
-        elif grau_vertice > 0 and grau_vertice <= 5:
-            count_zero_cinco += 1
-        elif grau_vertice > 5 and grau_vertice <= 10:
-            count_cinco_dez += 1
-        else:
-            count_mais_dez += 1
+        qtd_encontros.append(grau_vertice)
 
-    print(count_zero)
+
+    counter = pd.DataFrame(collections.Counter(qtd_encontros).items())
+    counter.to_csv('data_pd.csv')
 
 main()
 
